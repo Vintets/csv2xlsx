@@ -39,6 +39,7 @@ venv.bak/
 *.csv
 *.xlsx
 !/zProjectDevelopment/_ProjectDescription.txt
+!requirements.txt
 
 
 # Distribution / packaging
