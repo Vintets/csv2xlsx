@@ -84,12 +84,12 @@ def convert_csv(file_in: Path, excel: Excel) -> None:
         with open(file_in, 'r', encoding='utf-16le') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                print(row)
+                # print(row)
                 excel.ws.append(row)
                 # ws.append([ILLEGAL_CHARACTERS_RE.sub('', row)])
         max_row = excel.ws.max_row
         max_col = excel.ws.max_column
-        print('max', max_row, max_col)
+        print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
 
     # except UnidentifiedImageError:
     #     print('Ошибка открытия файла изображения!')
@@ -102,7 +102,8 @@ def convert_csv(file_in: Path, excel: Excel) -> None:
 def main() -> None:
     file_in = validate_transferred_argument()
     file_out = file_in.parent / f'{file_in.stem}.xlsx'
-    excel = Excel(file_out).create()
+    excel = Excel(file_out)
+    excel.create()
     convert_csv(file_in, excel)
     excel.save()
     if config.REMOVE_FILE_IN:
