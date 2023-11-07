@@ -48,6 +48,15 @@ class FileNotCSVError(Exception):
         return self.msg
 
 
+class SaveError(Exception):
+    """Error save file."""
+    def __init__(self):
+        self.msg = f'Ошибка сохранения файла!'
+
+    def __str__(self):
+        return self.msg
+
+
 class Excel:
     def __init__(self, file_out: Path) -> None:
         self.file_out = file_out
@@ -60,7 +69,10 @@ class Excel:
         self.ws.title = self.file_out.stem
 
     def save(self) -> None:
-        self.wb.save(self.file_out)
+        try:
+            self.wb.save(self.file_out)
+        except OSError:
+            raise SaveError()
 
 
 def validate_transferred_argument() -> Path:
@@ -80,23 +92,15 @@ def validate_transferred_argument() -> Path:
 
 
 def convert_csv(file_in: Path, excel: Excel) -> None:
-    try:
-        with open(file_in, 'r', encoding='utf-16le') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                # print(row)
-                excel.ws.append(row)
-                # ws.append([ILLEGAL_CHARACTERS_RE.sub('', row)])
-        max_row = excel.ws.max_row
-        max_col = excel.ws.max_column
-        print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
-
-    # except UnidentifiedImageError:
-    #     print('Ошибка открытия файла изображения!')
-    #     exit_from_program(code=1, close=config.CLOSECONSOLE)
-    except OSError:
-        print('Ошибка сохранения файла!')
-        exit_from_program(code=1, close=config.CLOSECONSOLE)
+    with open(file_in, 'r', encoding='utf-16le') as f:
+        reader = csv.reader(f, delimiter='\t')
+        for row in reader:
+            # print(row)
+            excel.ws.append(row)
+            # ws.append([ILLEGAL_CHARACTERS_RE.sub('', row)])
+    max_row = excel.ws.max_row
+    max_col = excel.ws.max_column
+    print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
 
 
 def main() -> None:
@@ -125,7 +129,12 @@ if __name__ == '__main__':
     os.system('color 71')
     try:
         main()
-    except (ArgumentNotPassedError, ArgumentIsFolderError, FileNotExistError, FileNotCSVError) as e:
+    except (ArgumentNotPassedError,
+            ArgumentIsFolderError,
+            FileNotExistError,
+            FileNotCSVError,
+            SaveError
+            ) as e:
         print(e)
         exit_from_program(code=1, close=config.CLOSECONSOLE)
     except KeyboardInterrupt:
