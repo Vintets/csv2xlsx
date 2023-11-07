@@ -30,6 +30,15 @@ class ArgumentIsFolderError(Exception):
         return self.msg
 
 
+class FileNotExistError(Exception):
+    """Error argument file not exist."""
+    def __init__(self, file_in: str):
+        self.msg = f'Файл "{file_in}" не существует!'
+
+    def __str__(self):
+        return self.msg
+
+
 class FileNotCSVError(Exception):
     """Error file not CSV."""
     def __init__(self):
@@ -61,8 +70,10 @@ def validate_transferred_argument() -> Path:
         raise ArgumentNotPassedError()  # from None
     file_in = Path(arg)
 
-    if not file_in.is_file():
+    if file_in.is_dir():
         raise ArgumentIsFolderError()
+    elif not file_in.exists():
+        raise FileNotExistError(file_in)
     elif file_in.suffix != '.csv':
         raise FileNotCSVError()
     return file_in
@@ -113,7 +124,7 @@ if __name__ == '__main__':
     os.system('color 71')
     try:
         main()
-    except (ArgumentNotPassedError, ArgumentIsFolderError, FileNotCSVError) as e:
+    except (ArgumentNotPassedError, ArgumentIsFolderError, FileNotExistError, FileNotCSVError) as e:
         print(e)
         exit_from_program(code=1, close=config.CLOSECONSOLE)
     except KeyboardInterrupt:
