@@ -92,12 +92,10 @@ def validate_transferred_argument() -> Path:
 
 
 def convert_csv(file_in: Path, excel: Excel) -> None:
-    with open(file_in, 'r', encoding='utf-16le') as f:
+    with open(file_in, 'r', encoding='utf-16') as f:
         reader = csv.reader(f, delimiter='\t')
         for row in reader:
-            # print(row)
             excel.ws.append(row)
-            # ws.append([ILLEGAL_CHARACTERS_RE.sub('', row)])
     max_row = excel.ws.max_row
     max_col = excel.ws.max_column
     print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
