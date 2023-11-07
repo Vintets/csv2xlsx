@@ -1,0 +1,62 @@
+# System
+Thumbs.db
+.DS_Store
+*.bak
+*~
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Venv
+/env/
+/env2/
+/venv/
+env.bak/
+venv.bak/
+
+# Configs
+/.vscode/
+**/.env
+
+# Project dirs
+/zProjectDevelopment/*
+
+# Project files
+
+# Simlinks
+
+# Log files
+/logs/
+*.log
+
+# Other files
+Очистка_компил_py3.bat
+*.png
+*.jpg
+*.txt
+*.csv
+*.xlsx
+!/zProjectDevelopment/_ProjectDescription.txt
+
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

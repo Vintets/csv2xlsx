@@ -1,0 +1,39 @@
+
+# расположение
+#WIN#
+cd "$YandexDisk/_Projects_Py/csv2xlsx"
+cd $YandexDisk/_Projects_Py/csv2xlsx
+
+
+# запуск
+python csv2xlsx.py file.csv
+
+python csv2xlsx.py Баки_07.11.2023.csv
+
+
+# ==================================================================================================
+            *** Git ***
+
+Проект csv2xlsx
+    cd "$YandexDisk/_Projects_Py/csv2xlsx"
+    git remote add origin git@bitbucket.org:Vintets/csv2xlsx.git
+    git remote set-url origin --add git@github.com:Vintets/csv2xlsx.git
+
+    git it
+    git push -u origin master
+    git push origin master
+
+
+
+# ==================================================================================================
+            *** Анализ ***
+
+
+col 77
+row 126
+
+
+// *************************************************************************************************
+# ==================================================================================================
+
+
