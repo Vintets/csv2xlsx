@@ -33,7 +33,7 @@ class ArgumentIsFolderError(Exception):
 class FileNotExistError(Exception):
     """Error argument file not exist."""
     def __init__(self, file_in: str):
-        self.msg = f'Файл "{file_in}" не существует!'
+        self.msg = f"Файл '{file_in}' не существует!"
 
     def __str__(self):
         return self.msg
@@ -105,6 +105,7 @@ def convert_csv(file_in: Path, excel: Excel) -> None:
 
 def main() -> None:
     file_in = validate_transferred_argument()
+    print(f"Конвертируем файл '{file_in.name}'")
     file_out = file_in.parent / f'{file_in.stem}.xlsx'
     excel = Excel(file_out)
     excel.create()
