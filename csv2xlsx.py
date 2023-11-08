@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import sys
 from time import sleep
+from zipfile import BadZipFile, is_zipfile, ZipFile
 
 import config
 import openpyxl as opx
@@ -44,6 +45,15 @@ class FileNotCSVError(Exception):
     """Error file not CSV."""
     def __init__(self):
         self.msg = f'Передана не CSV файл!'
+
+    def __str__(self):
+        return self.msg
+
+
+class FileNotZIPError(Exception):
+    """Error file not ZIP."""
+    def __init__(self):
+        self.msg = f'Неверный формат ZIP файла!'
 
     def __str__(self):
         return self.msg
@@ -128,9 +138,36 @@ def validate_transferred_argument(arg: str) -> Path:
         raise ArgumentIsFolderError()
     elif not file_in.exists():
         raise FileNotExistError(file_in)
-    elif file_in.suffix != '.csv':
+
+    if file_in.suffix == '.zip':
+        file_in = unzip_file(file_in)
+
+    if file_in.suffix != '.csv':
         raise FileNotCSVError()
     return file_in
+
+
+def unzip_file(file_zip: Path) -> Path:
+    if not is_zipfile(file_zip):
+        raise FileNotZIPError()
+
+    try:
+        with ZipFile(file_zip, 'r') as myzip:
+            # myzip.printdir()
+            namelist = myzip.namelist()[0]
+            unzipped_name = myzip.extract(namelist)
+    except BadZipFile:
+        raise FileNotZIPError()
+
+    # rename unzipped file
+    unzipped_name = Path(unzipped_name)
+    correct_unzipped_name = file_zip.parent / file_zip.stem
+    os.rename(unzipped_name, correct_unzipped_name)
+    # print(unzipped_name.parts)
+    # print(correct_unzipped_name.parts)
+
+    remove_file(file_zip)
+    return correct_unzipped_name
 
 
 def convert_csv(file_in: Path, excel: Excel) -> None:
@@ -176,7 +213,8 @@ if __name__ == '__main__':
             ArgumentIsFolderError,
             FileNotExistError,
             FileNotCSVError,
-            SaveError
+            SaveError,
+            FileNotZIPError
             ) as e:
         print(e)
         exit_from_program(code=1, close=config.CLOSECONSOLE)

@@ -34,8 +34,8 @@ REMOVE_FILE_IN = False
 CLOSECONSOLE = True
 EXCEPTION_TRACE = True
 ```
-``REMOVE_FILE_IN`` : удалять исходный файл после завершения  
-``CLOSECONSOLE`` : закрывать консоль  
+``REMOVE_FILE_IN`` : удалять исходный файл после завершения
+``CLOSECONSOLE`` : закрывать консоль
 ``EXCEPTION_TRACE`` : показывать ошибки
 
 
@@ -43,21 +43,21 @@ EXCEPTION_TRACE = True
 
 ### Запуск
 
-перетащить файл `.csv` на файл скрипта `csv2xlsx.py`
+перетащить файл `.csv` или `.zip` (содержащий csv) на файл скрипта `csv2xlsx.py`
 
 ### Запуск из консоли
 
 ```bash
-python csv2xlsx.py file.csv
+python csv2xlsx.py fullpath\file.csv
 ```
-- аргумент `file.csv` - обрабатываемый файл
+- аргумент `fullpath\file.csv` - полный путь к обрабатываемому файлу
 
 
 ____
 
 ## License
 
-![License](https://img.shields.io/badge/license-MIT-green)  
+![License](https://img.shields.io/badge/license-MIT-green)
 :license:  [MIT](https://github.com/toorusr/csv2xlsx/tree/master/LICENSE)
 
 
