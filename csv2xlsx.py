@@ -170,6 +170,11 @@ def unzip_file(file_zip: Path) -> Path:
     return correct_unzipped_name
 
 
+def remove_file(filename):
+    if config.REMOVE_FILE_IN:
+        os.remove(filename)
+
+
 def convert_csv(file_in: Path, excel: Excel) -> None:
     with open(file_in, 'r', encoding='utf-16') as f:
         reader = csv.reader(f, delimiter='\t')
@@ -190,8 +195,7 @@ def main() -> None:
     convert_csv(file_in, excel)
     excel.stylization()
     excel.save()
-    if config.REMOVE_FILE_IN:
-        os.remove(file_in)
+    remove_file(file_in)
 
 
 def exit_from_program(code: int = 0, close: bool = False) -> None:
