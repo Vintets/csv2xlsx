@@ -70,12 +70,42 @@ class Excel:
         self.ws = self.wb.worksheets[0]  # wb.active
         self.ws.title = self.file_out.stem
 
+    def stylization(self):
+        self.ws.freeze_panes = self.ws['C2']
+        self.stylization_header()
+        self.get_header_text()
+
+        # высота строк данных
+        for col in range(1, self.ws.max_column + 1):
+            self.ws.column_dimensions[get_column_letter(col)].width = 15
+
+        self.remove_columns()
+
+    def stylization_header(self):
+        self.ws.auto_filter.ref = self.ws.dimensions
+        self.ws.row_dimensions[1].height = config.HEADER_HEIGHT
+        al = Alignment(horizontal='general',
+                       vertical='top',
+                       text_rotation=0,
+                       wrap_text=True,
+                       shrink_to_fit=False,
+                       indent=0)
+
+        for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
+            for cell in row_cells:
+                cell.alignment = al
+                cell.font = Font(bold=True)
+
     def get_header_text(self):
         self.header_text = []
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 self.header_text.append(cell.value)
         print(self.header_text)
+
+    def remove_columns(self):
+        if config.REMOVE_COLUMN and config.REMOVE_COLUMNS:
+            pass
 
     def save(self) -> None:
         try:
@@ -117,6 +147,7 @@ def main() -> None:
     excel = Excel(file_out)
     excel.create()
     convert_csv(file_in, excel)
+    excel.stylization()
     excel.save()
     if config.REMOVE_FILE_IN:
         os.remove(file_in)
