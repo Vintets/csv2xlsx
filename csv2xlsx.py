@@ -63,11 +63,18 @@ class Excel:
         self.file_out = file_out
         self.wb = None
         self.ws = None
+        self.header_text = []
 
     def create(self) -> None:
         self.wb = opx.Workbook()
         self.ws = self.wb.worksheets[0]  # wb.active
         self.ws.title = self.file_out.stem
+
+    def get_header_text(self):
+        for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
+            for cell in row_cells:
+                self.header_text.append(cell.value)
+        print(self.header_text)
 
     def save(self) -> None:
         try:
