@@ -71,6 +71,7 @@ class Excel:
         self.ws.title = self.file_out.stem
 
     def get_header_text(self):
+        self.header_text = []
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 self.header_text.append(cell.value)
