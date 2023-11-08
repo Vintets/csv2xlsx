@@ -20,5 +20,5 @@ ignore =
     F541,
     # type annotations
     TAE001
-exclude = .git,.vscode,__pycache__,env,venv,logs,zProjectDevelopment,old,build,dist,*.db,*.bat,*.exe,*.png,*.jpg,*.webm,*.mp4,*.mkv,*.wav,*.mp3,*.m4a,*.xml,*.csv,*.xlsx,*.txt
+exclude = .git,.vscode,__pycache__,env,venv,logs,zProjectDevelopment,old,build,dist,*.db,*.bat,*.exe,*.png,*.jpg,*.webm,*.mp4,*.mkv,*.wav,*.mp3,*.m4a,*.xml,*.csv,*.xlsx,*.txt,*.zip
 # noqa

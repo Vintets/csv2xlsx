@@ -38,6 +38,7 @@ venv.bak/
 *.txt
 *.csv
 *.xlsx
+*.zip
 !/zProjectDevelopment/_ProjectDescription.txt
 !requirements.txt
 
