@@ -114,13 +114,16 @@ class Excel:
             raise SaveError()
 
 
-def validate_transferred_argument() -> Path:
+def get_transferred_argument() -> str:
     try:
         arg = sys.argv[1]
     except IndexError:
         raise ArgumentNotPassedError()  # from None
-    file_in = Path(arg)
+    return arg
 
+
+def validate_transferred_argument(arg: str) -> Path:
+    file_in = Path(arg)
     if file_in.is_dir():
         raise ArgumentIsFolderError()
     elif not file_in.exists():
@@ -141,7 +144,8 @@ def convert_csv(file_in: Path, excel: Excel) -> None:
 
 
 def main() -> None:
-    file_in = validate_transferred_argument()
+    arg = get_transferred_argument()
+    file_in = validate_transferred_argument(arg)
     print(f"Конвертируем файл '{file_in.name}'")
     file_out = file_in.parent / f'{file_in.stem}.xlsx'
     excel = Excel(file_out)
