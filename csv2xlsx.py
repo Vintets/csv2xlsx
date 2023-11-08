@@ -8,8 +8,9 @@ from time import sleep
 
 import config
 import openpyxl as opx
-# from openpyxl.utils import get_column_letter, column_index_from_string, coordinate_from_string
-# from openpyxl.cell.cell import ILLEGAL_CHARACTERS_RE
+from openpyxl.styles import Alignment, Font
+from openpyxl.utils import get_column_letter
+from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
 
 class ArgumentNotPassedError(Exception):
