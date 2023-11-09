@@ -11,7 +11,7 @@ import config
 import openpyxl as opx
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
-from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
+# from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
 
 class ArgumentNotPassedError(Exception):
@@ -44,7 +44,7 @@ class FileNotExistError(Exception):
 class FileNotCSVError(Exception):
     """Error file not CSV."""
     def __init__(self):
-        self.msg = f'Передана не CSV файл!'
+        self.msg = f'Передан не CSV файл!'
 
     def __str__(self):
         return self.msg
@@ -80,7 +80,7 @@ class Excel:
         self.ws = self.wb.worksheets[0]  # wb.active
         self.ws.title = self.file_out.stem
 
-    def stylization(self):
+    def stylization(self) -> None:
         self.ws.freeze_panes = self.ws['C2']
         self.stylization_header()
         self.get_header_text()
@@ -91,7 +91,7 @@ class Excel:
 
         self.remove_columns()
 
-    def stylization_header(self):
+    def stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
         self.ws.row_dimensions[1].height = config.HEADER_HEIGHT
         al = Alignment(horizontal='general',
@@ -106,12 +106,13 @@ class Excel:
                 cell.alignment = al
                 cell.font = Font(bold=True)
 
-    def get_header_text(self):
+    def get_header_text(self) -> None:
         self.header_text = []
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 self.header_text.append(cell.value)
-        print(self.header_text)
+        # print(self.header_text)
+        pass
 
     def remove_columns(self) -> None:
         if not (config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
