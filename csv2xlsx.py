@@ -134,7 +134,7 @@ class Excel:
         return header_text
 
     def remove_columns(self) -> None:
-        if not (config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
+        if not (config.ADDITIONAL_ACTIONS and config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
             return
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in reversed(row_cells):
