@@ -74,7 +74,6 @@ class Excel:
         self.file_out = file_out
         self.wb = None
         self.ws = None
-        self.header_text = []
 
     def create(self) -> None:
         self.wb = opx.Workbook()
@@ -84,7 +83,6 @@ class Excel:
     def stylization(self) -> None:
         self.ws.freeze_panes = self.ws['C2']
         self._stylization_header()
-        self.get_header_text()
 
         # высота строк данных
         for col in range(1, self.ws.max_column + 1):
@@ -128,13 +126,12 @@ class Excel:
                        )
         return (hdr_al, hdr_fill, thin_border, hdr_font)
 
-    def get_header_text(self) -> None:
-        self.header_text = []
+    def get_header_text(self) -> list[str]:
+        header_text = []
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 self.header_text.append(cell.value)
-        # print(self.header_text)
-        pass
+        return header_text
 
     def remove_columns(self) -> None:
         if not (config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
