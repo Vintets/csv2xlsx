@@ -10,7 +10,7 @@ from zipfile import BadZipFile, is_zipfile, ZipFile
 import config
 import openpyxl as opx
 from openpyxl.styles import Alignment, Font, PatternFill
-from openpyxl.styles.borders import Border, Side, BORDER_THIN
+from openpyxl.styles.borders import Border, BORDER_THIN, Side
 from openpyxl.utils import get_column_letter
 # from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
