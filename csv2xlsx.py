@@ -89,8 +89,6 @@ class Excel:
         for col in range(1, self.ws.max_column + 1):
             self.ws.column_dimensions[get_column_letter(col)].width = 15
 
-        self.remove_columns()
-
     def stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
         self.ws.row_dimensions[1].height = config.HEADER_HEIGHT
@@ -194,12 +192,16 @@ def main() -> None:
     arg = get_transferred_argument()
     file_in = validate_transferred_argument(arg)
     print(f"Конвертируем файл '{file_in.name}'")
+
     file_out = file_in.parent / f'{file_in.stem}.xlsx'
     excel = Excel(file_out)
     excel.create()
     convert_csv(file_in, excel)
+
+    excel.remove_columns()
     excel.stylization()
     excel.save()
+
     remove_file(file_in)
 
 
