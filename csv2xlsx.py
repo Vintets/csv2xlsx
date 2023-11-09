@@ -179,6 +179,22 @@ class Excel:
 
             header_text = self.get_header_text()
 
+    def copy_data_columns(self) -> None:
+        if not (config.ADDITIONAL_ACTIONS and config.COPY_DATA_COLUMNS):
+            return
+        header_text = self.get_header_text()
+        for col_to, col_in in config.COPY_DATA_COLUMNS.items():
+            if col_in not in header_text or col_to not in header_text:
+                continue
+            col_to_idx = header_text.index(col_to) + 1
+            col_in_idx = header_text.index(col_in) + 1
+
+            for row in range(1, self.ws.max_row + 1):
+                if not self.ws.cell(row=row, column=col_to_idx).value:
+                    val = self.ws.cell(row=row, column=col_in_idx).value
+                    self.ws.cell(row=row, column=col_to_idx, value=val)
+
+
     def hidden_columns(self) -> None:
         if not (config.ADDITIONAL_ACTIONS and config.HIDDEN_COLUMNS):
             return
@@ -278,6 +294,7 @@ def main() -> None:
 
     excel.remove_columns()
     excel.move_columns()
+    excel.copy_data_columns()
     excel.stylization()
     excel.hidden_columns()
     excel.freeze_region()
