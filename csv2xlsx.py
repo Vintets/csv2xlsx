@@ -83,14 +83,14 @@ class Excel:
 
     def stylization(self) -> None:
         self.ws.freeze_panes = self.ws['C2']
-        self.stylization_header()
+        self._stylization_header()
         self.get_header_text()
 
         # высота строк данных
         for col in range(1, self.ws.max_column + 1):
             self.ws.column_dimensions[get_column_letter(col)].width = 15
 
-    def stylization_header(self) -> None:
+    def _stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
         self.ws.row_dimensions[1].height = config.HEADER_HEIGHT
         hdr_al, hdr_fill, thin_border, hdr_font = self._get_styles_header()
