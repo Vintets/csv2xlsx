@@ -81,7 +81,6 @@ class Excel:
         self.ws.title = self.file_out.stem
 
     def stylization(self) -> None:
-        self.ws.freeze_panes = self.ws['C2']
         self._stylization_header()
 
         # высота строк данных
@@ -149,6 +148,16 @@ class Excel:
                 if cell.value in config.HIDDEN_COLUMNS:
                     col_letter = get_column_letter(cell.column)
                     self.ws.column_dimensions.group(col_letter, col_letter, outline_level=1, hidden=True)
+
+    def freeze_region(self) -> None:
+        if not config.FREEZE_REGION:
+            return
+        header_text = self.get_header_text()
+        try:
+            freeze_idx = header_text.index(config.FREEZE_REGION) + 2
+        except ValueError:
+            pass
+        self.ws.freeze_panes = self.ws[f'{get_column_letter(freeze_idx)}2']
 
     def save(self) -> None:
         try:
@@ -231,6 +240,7 @@ def main() -> None:
     excel.remove_columns()
     excel.stylization()
     excel.hidden_columns()
+    excel.freeze_region()
     excel.save()
 
     remove_file(file_in)
