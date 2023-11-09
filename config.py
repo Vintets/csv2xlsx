@@ -73,6 +73,8 @@ HIDDEN_COLUMNS = (
 FREEZE_REGION = 'Артикул'
 # высота шапки
 HEADER_HEIGHT = 60
+# ширина колонки  с наименованием
+COL_NAME_WIDTH = 66
 
 CLOSECONSOLE = True
 EXCEPTION_TRACE = True

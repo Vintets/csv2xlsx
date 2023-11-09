@@ -83,9 +83,11 @@ class Excel:
     def stylization(self) -> None:
         self._stylization_header()
 
-        # высота строк данных
+        # ширина колонок
         for col in range(1, self.ws.max_column + 1):
             self.ws.column_dimensions[get_column_letter(col)].width = 15
+
+        self.set_width_col_name()
 
     def _stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
@@ -131,6 +133,16 @@ class Excel:
             for cell in row_cells:
                 header_text.append(cell.value)
         return header_text
+
+    def set_width_col_name(self):
+        if config.COL_NAME_WIDTH <= 0:
+            return
+        header_text = self.get_header_text()
+        try:
+            col_name_idx = header_text.index('Название товара или услуги') + 1
+        except ValueError:
+            return
+        self.ws.column_dimensions[get_column_letter(col_name_idx)].width = config.COL_NAME_WIDTH
 
     def remove_columns(self) -> None:
         if not (config.ADDITIONAL_ACTIONS and config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
