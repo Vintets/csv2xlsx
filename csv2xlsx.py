@@ -134,7 +134,7 @@ class Excel:
                 header_text.append(cell.value)
         return header_text
 
-    def set_width_col_name(self):
+    def set_width_col_name(self) -> None:
         if config.COL_NAME_WIDTH <= 0:
             return
         header_text = self.get_header_text()
@@ -191,9 +191,8 @@ class Excel:
 
             for row in range(1, self.ws.max_row + 1):
                 if not self.ws.cell(row=row, column=col_to_idx).value:
-                    val = self.ws.cell(row=row, column=col_in_idx).value
-                    self.ws.cell(row=row, column=col_to_idx, value=val)
-
+                    value = self.ws.cell(row=row, column=col_in_idx).value
+                    self.ws.cell(row=row, column=col_to_idx, value=value)
 
     def hidden_columns(self) -> None:
         if not (config.ADDITIONAL_ACTIONS and config.HIDDEN_COLUMNS):
@@ -267,9 +266,14 @@ def unzip_file(file_zip: Path) -> Path:
     return correct_unzipped_name
 
 
-def remove_file(filename):
+def remove_file(filename) -> None:
     if config.REMOVE_FILE_IN:
         os.remove(filename)
+
+
+def final_message(excel: Excel) -> None:
+    print(f'Оставлено столбцов:{excel.ws.max_column}')
+    print('Обработка завершена')
 
 
 def convert_csv(file_in: Path, excel: Excel) -> None:
@@ -300,6 +304,7 @@ def main() -> None:
     excel.freeze_region()
     excel.save()
 
+    final_message(excel)
     remove_file(file_in)
 
 
