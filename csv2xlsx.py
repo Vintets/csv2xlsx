@@ -9,7 +9,7 @@ from zipfile import BadZipFile, is_zipfile, ZipFile
 
 import config
 import openpyxl as opx
-from openpyxl.styles import Alignment, Font
+from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 # from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
@@ -100,10 +100,16 @@ class Excel:
                         shrink_to_fit=False,
                         indent=0
                         )
+        my_fill = PatternFill(
+                              fill_type='solid',
+                              start_color='B7DEE8',
+                              end_color='B7DEE8'
+                              )
 
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 cell.alignment = my_al
+                cell.fill = my_fill
                 cell.font = Font(bold=True)
 
     def get_header_text(self) -> None:
