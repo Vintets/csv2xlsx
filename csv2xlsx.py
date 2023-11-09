@@ -10,6 +10,7 @@ from zipfile import BadZipFile, is_zipfile, ZipFile
 import config
 import openpyxl as opx
 from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.styles.borders import Border, Side, BORDER_THIN
 from openpyxl.utils import get_column_letter
 # from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
@@ -105,11 +106,18 @@ class Excel:
                               start_color='B7DEE8',
                               end_color='B7DEE8'
                               )
+        thin_border = Border(
+                             left=Side(border_style=BORDER_THIN, color='7F7F7F'),
+                             right=Side(border_style=BORDER_THIN, color='7F7F7F'),
+                             top=Side(border_style=BORDER_THIN, color='7F7F7F'),
+                             bottom=Side(border_style=BORDER_THIN, color='7F7F7F')
+                             )
 
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 cell.alignment = my_al
                 cell.fill = my_fill
+                cell.border = thin_border
                 cell.font = Font(bold=True)
 
     def get_header_text(self) -> None:
