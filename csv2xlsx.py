@@ -92,16 +92,18 @@ class Excel:
     def stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
         self.ws.row_dimensions[1].height = config.HEADER_HEIGHT
-        al = Alignment(horizontal='general',
-                       vertical='top',
-                       text_rotation=0,
-                       wrap_text=True,
-                       shrink_to_fit=False,
-                       indent=0)
+        my_al = Alignment(
+                        horizontal='general',
+                        vertical='top',
+                        text_rotation=0,
+                        wrap_text=True,
+                        shrink_to_fit=False,
+                        indent=0
+                        )
 
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
-                cell.alignment = al
+                cell.alignment = my_al
                 cell.font = Font(bold=True)
 
     def get_header_text(self) -> None:
