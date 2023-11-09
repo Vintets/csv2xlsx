@@ -112,13 +112,17 @@ class Excel:
                              top=Side(border_style=BORDER_THIN, color='7F7F7F'),
                              bottom=Side(border_style=BORDER_THIN, color='7F7F7F')
                              )
+        my_font = Font(
+                       bold=True,
+                       color='1F497D'
+                       )
 
         for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
             for cell in row_cells:
                 cell.alignment = my_al
                 cell.fill = my_fill
                 cell.border = thin_border
-                cell.font = Font(bold=True)
+                cell.font = my_font
 
     def get_header_text(self) -> None:
         self.header_text = []
