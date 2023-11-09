@@ -87,7 +87,7 @@ HEADER_HEIGHT = 60
 COL_NAME_WIDTH = 66
 
 # ширина остальных колонок (*7)
-COL_NAME_WIDTH = 15
+COL_WIDTH = 15
 
 CLOSECONSOLE = True
 EXCEPTION_TRACE = True

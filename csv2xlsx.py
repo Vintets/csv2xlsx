@@ -85,7 +85,7 @@ class Excel:
 
         # ширина колонок
         for col in range(1, self.ws.max_column + 1):
-            self.ws.column_dimensions[get_column_letter(col)].width = config.COL_NAME_WIDTH
+            self.ws.column_dimensions[get_column_letter(col)].width = config.COL_WIDTH
 
         self.set_width_col_name()
 
