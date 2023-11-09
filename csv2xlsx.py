@@ -113,9 +113,13 @@ class Excel:
                 self.header_text.append(cell.value)
         print(self.header_text)
 
-    def remove_columns(self):
-        if config.REMOVE_COLUMN and config.REMOVE_COLUMNS:
-            pass
+    def remove_columns(self) -> None:
+        if not (config.REMOVE_COLUMN and config.REMOVE_COLUMNS):
+            return
+        for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
+            for cell in reversed(row_cells):
+                if cell.value in config.REMOVE_COLUMNS:
+                    self.ws.delete_cols(cell.column)
 
     def save(self) -> None:
         try:
