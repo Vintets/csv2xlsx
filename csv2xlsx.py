@@ -156,7 +156,7 @@ class Excel:
         try:
             freeze_idx = header_text.index(config.FREEZE_REGION) + 2
         except ValueError:
-            pass
+            return
         self.ws.freeze_panes = self.ws[f'{get_column_letter(freeze_idx)}2']
 
     def save(self) -> None:
