@@ -9,6 +9,7 @@ Convert csv file to xlsx
 ## Description
 
 Конвертация .csv файла экспорта InSales в нормальный файл .xlsx
+Можно обрабатывать .zip архив с файлом .csv без распаковки.
 
 Дополнительные действия:
 - Удаляет ненужные колонки
@@ -40,10 +41,32 @@ pip3 install -r requirements.txt
 
 REMOVE_FILE_IN = False
 
+REMOVE_COLUMN = True
+REMOVE_COLUMNS = ()
+
+ADDITIONAL_ACTIONS = True
+MOVE_COLUMNS = {}
+COPY_DATA_COLUMNS = {}
+HIDDEN_COLUMNS = ()
+
+FREEZE_REGION = 'Артикул'
+HEADER_HEIGHT = 60
+COL_NAME_WIDTH = 66
+COL_WIDTH = 15
 CLOSECONSOLE = True
-EXCEPTION_TRACE = True
+EXCEPTION_TRACE = False
 ```
 ``REMOVE_FILE_IN`` : удалять исходный файл после завершения
+``REMOVE_COLUMN`` : удалять столбцы
+``REMOVE_COLUMNS`` : список удаляемых столбцов
+``ADDITIONAL_ACTIONS`` : вкл/выкл (выполнять перемещение, сворачивание, копирование данных)
+``MOVE_COLUMNS`` : перености столбец: после столбца
+``COPY_DATA_COLUMNS`` : заполнить данные (если пусто) в столбце: из столбца
+``HIDDEN_COLUMNS`` : свернуть столбцы
+``FREEZE_REGION`` : заморозить регион после указанного столбца
+``HEADER_HEIGHT`` : высота шапки
+``COL_NAME_WIDTH`` : ширина колонки  с наименованием
+``COL_WIDTH`` : ширина остальных колонок
 ``CLOSECONSOLE`` : закрывать консоль
 ``EXCEPTION_TRACE`` : показывать ошибки
 
