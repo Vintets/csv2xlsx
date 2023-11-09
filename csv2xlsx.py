@@ -152,6 +152,33 @@ class Excel:
                 if cell.value in config.REMOVE_COLUMNS:
                     self.ws.delete_cols(cell.column)
 
+    def move_columns(self) -> None:
+        if not (config.ADDITIONAL_ACTIONS and config.MOVE_COLUMNS):
+            return
+        header_text = self.get_header_text()
+        for col_in, col_to in config.MOVE_COLUMNS.items():
+            if col_in not in header_text or col_to not in header_text:
+                continue
+            col_in_idx = header_text.index(col_in) + 1
+            col_to_idx = header_text.index(col_to) + 1
+
+            self.ws.insert_cols(col_to_idx + 1, amount=1)
+            if col_in_idx > col_to_idx:
+                move_col = col_to_idx - col_in_idx
+                col_in_idx = col_in_idx + 1
+            else:
+                move_col = col_to_idx - col_in_idx + 1
+            col_in_letter = get_column_letter(col_in_idx)
+            # print(f'{col_in_letter}1:{col_in_letter}{self.ws.max_row}')
+            self.ws.move_range(
+                               f'{col_in_letter}1:{col_in_letter}{self.ws.max_row}',
+                               rows=0,
+                               cols=move_col
+                               )
+            self.ws.delete_cols(col_in_idx)
+
+            header_text = self.get_header_text()
+
     def hidden_columns(self) -> None:
         if not (config.ADDITIONAL_ACTIONS and config.HIDDEN_COLUMNS):
             return
@@ -250,6 +277,7 @@ def main() -> None:
     convert_csv(file_in, excel)
 
     excel.remove_columns()
+    excel.move_columns()
     excel.stylization()
     excel.hidden_columns()
     excel.freeze_region()
