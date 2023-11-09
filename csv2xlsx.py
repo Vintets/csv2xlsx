@@ -144,6 +144,15 @@ class Excel:
                 if cell.value in config.REMOVE_COLUMNS:
                     self.ws.delete_cols(cell.column)
 
+    def hidden_columns(self) -> None:
+        if not config.HIDDEN_COLUMNS:
+            return
+        for row_cells in self.ws.iter_rows(min_row=1, max_row=1):
+            for cell in reversed(row_cells):
+                if cell.value in config.HIDDEN_COLUMNS:
+                    col_letter = get_column_letter(cell.column)
+                    self.ws.column_dimensions.group(col_letter, col_letter, outline_level=1, hidden=True)
+
     def save(self) -> None:
         try:
             self.wb.save(self.file_out)
@@ -224,6 +233,7 @@ def main() -> None:
 
     excel.remove_columns()
     excel.stylization()
+    excel.hidden_columns()
     excel.save()
 
     remove_file(file_in)

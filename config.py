@@ -58,6 +58,12 @@ REMOVE_COLUMNS = (
     # 'Дополнительное поле: Короткое наименование',
     )
 
+HIDDEN_COLUMNS = (
+    'Краткое описание',
+    'Габариты варианта',
+    'Параметр: Изготовитель',
+)
+
 HEADER_HEIGHT = 60
 CLOSECONSOLE = True
 EXCEPTION_TRACE = True
