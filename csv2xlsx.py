@@ -93,6 +93,7 @@ class Excel:
             self.ws.column_dimensions[get_column_letter(col)].width = config.COL_WIDTH
 
         self.set_width_col_name()
+        self.ws.sheet_properties.outlinePr.summaryRight = False
 
     def _stylization_header(self) -> None:
         self.ws.auto_filter.ref = self.ws.dimensions
