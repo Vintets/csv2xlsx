@@ -80,6 +80,11 @@ class Excel:
         self.ws = self.wb.worksheets[0]  # wb.active
         self.ws.title = self.file_out.stem
 
+    def display_dimensions(self) -> None:
+        max_row = self.ws.max_row
+        max_col = self.ws.max_column
+        print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
+
     def stylization(self) -> None:
         self._stylization_header()
 
@@ -281,9 +286,7 @@ def convert_csv(file_in: Path, excel: Excel) -> None:
         reader = csv.reader(f, delimiter='\t')
         for row in reader:
             excel.ws.append(row)
-    max_row = excel.ws.max_row
-    max_col = excel.ws.max_column
-    print(f'Файл .csv содержит\tстолбцов:{max_col} строк:{max_row}')
+    excel.display_dimensions()
 
 
 def main() -> None:
