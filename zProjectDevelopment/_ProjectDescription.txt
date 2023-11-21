@@ -1,8 +1,8 @@
 
 # расположение
-#WIN#
 cd "$YandexDisk/_Projects_Py/csv2xlsx"
-cd $YandexDisk/_Projects_Py/csv2xlsx
+#WIN#
+cd /d %YandexDisk%\_Projects_Py\csv2xlsx
 
 
 # запуск
