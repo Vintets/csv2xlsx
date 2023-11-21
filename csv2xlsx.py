@@ -189,7 +189,7 @@ class Excel:
             col_to_idx = header_text.index(col_to) + 1
             col_in_idx = header_text.index(col_in) + 1
 
-            for row in range(1, self.ws.max_row + 1):
+            for row in range(2, self.ws.max_row + 1):
                 if not self.ws.cell(row=row, column=col_to_idx).value:
                     value = self.ws.cell(row=row, column=col_in_idx).value
                     self.ws.cell(row=row, column=col_to_idx, value=value)
