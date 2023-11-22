@@ -216,7 +216,7 @@ class Excel:
             for cell in reversed(row_cells):
                 if cell.value in config.HIDDEN_COLUMNS:
                     col_letter = get_column_letter(cell.column)
-                    self.ws.column_dimensions.group(col_letter, col_letter, outline_level=1, hidden=True)
+                    self.dimensions.group(col_letter, col_letter, outline_level=1, hidden=True)
 
     def freeze_region(self) -> None:
         if not config.FREEZE_REGION:
