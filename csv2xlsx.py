@@ -3,6 +3,7 @@
 import csv
 import os
 from pathlib import Path
+# import pprint
 import sys
 from time import sleep
 from zipfile import BadZipFile, is_zipfile, ZipFile
@@ -12,6 +13,7 @@ import openpyxl as opx
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.styles.borders import Border, BORDER_THIN, Side
 from openpyxl.utils import get_column_letter
+# from openpyxl.worksheet.dimensions import ColumnDimension, DimensionHolder
 # from openpyxl.utils.cell import column_index_from_string, coordinate_from_string
 
 
@@ -74,6 +76,9 @@ class Excel:
         self.file_out = file_out
         self.wb = None
         self.ws = None
+        self.col_img_start_idx = None
+        self.col_img_end_idx = None
+        self.col_img_name = 'Изображения'
 
     def create(self) -> None:
         self.wb = opx.Workbook()
@@ -209,6 +214,69 @@ class Excel:
                     value = self.ws.cell(row=row, column=col_in_idx).value
                     self.ws.cell(row=row, column=col_to_idx, value=value)
 
+    def image_separation(self) -> None:
+        if not (config.IMAGE_SEPARATION):
+            return
+        try:
+            col_images_idx = self.get_col_images_idx()
+        except ValueError:
+            return
+        images = self.get_images_data(col_images_idx)
+        max_images_count = max(map(len, images))
+        # pprint.pprint(images)
+        # print(max_images_count)
+        self.insert_image_columns(col_images_idx + 1, max_images_count - 1, name=self.col_img_name)
+        self.write_images_link(col_images_idx, images)
+        self.col_img_start_idx = col_images_idx
+        self.col_img_end_idx = col_images_idx + max_images_count - 1
+        self.hidden_images_extend_columns(self.col_img_start_idx + 1, self.col_img_end_idx)
+
+    def get_col_images_idx(self) -> int:
+        header_text = self.get_header_text()
+        col_images_idx = header_text.index(self.col_img_name) + 1
+        return col_images_idx
+
+    def get_images_data(self, col_images_idx) -> list[list[str]]:
+        images = []
+        for row in range(2, self.ws.max_row + 1):
+            value = self.ws.cell(row=row, column=col_images_idx).value
+            images_product = value.strip().split()
+            images.append(images_product)
+        return images
+
+    def insert_image_columns(self, idx: int, amount: int, name: str) -> None:
+        self.ws.insert_cols(idx, amount)
+        for col in range(amount):
+            self.ws.cell(row=1, column=idx + col, value=name)
+
+    def write_images_link(self, col_idx, images) -> None:
+        style = Alignment(
+                          horizontal='fill',
+                          vertical='top'
+                          )
+        for row in range(2, self.ws.max_row + 1):
+            images_product = images[row - 2]
+            for col, link in enumerate(images_product):
+                self.ws.cell(row=row, column=col_idx + col, value=link)
+                self.ws.cell(row=row, column=col_idx + col).alignment = style
+
+    def hidden_images_extend_columns(self, col_start: int, col_end: int) -> None:
+        if not config.ADDITIONAL_ACTIONS:
+            return
+        # print(f'{col_start=}  {col_end=}  {get_column_letter(col_start)} {get_column_letter(col_end)}')
+        # self.dimensions.group(
+        #                       get_column_letter(col_start),
+        #                       end=get_column_letter(col_end),
+        #                       outline_level=1,
+        #                       hidden=True
+        #                       )
+        new_dim = self.dimensions[get_column_letter(col_start)]
+        new_dim.outline_level = 1
+        new_dim.hidden = True
+        new_dim.min = col_start
+        new_dim.max = col_end
+        new_dim.width = config.COL_WIDTH
+
     def hidden_columns(self) -> None:
         if not (config.ADDITIONAL_ACTIONS and config.HIDDEN_COLUMNS):
             return
@@ -312,6 +380,7 @@ def main() -> None:
     excel.remove_columns()
     excel.move_columns()
     excel.copy_data_columns()
+    excel.image_separation()
     excel.stylization()
     excel.set_width_column()
     excel.hidden_columns()
