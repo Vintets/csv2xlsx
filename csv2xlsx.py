@@ -79,6 +79,7 @@ class Excel:
         self.wb = opx.Workbook()
         self.ws = self.wb.worksheets[0]  # wb.active
         self.ws.title = self.file_out.stem
+        self.dimensions = self.ws.column_dimensions
 
     def display_dimensions(self) -> None:
         max_row = self.ws.max_row
@@ -87,12 +88,6 @@ class Excel:
 
     def stylization(self) -> None:
         self._stylization_header()
-
-        # ширина колонок
-        for col in range(1, self.ws.max_column + 1):
-            self.ws.column_dimensions[get_column_letter(col)].width = config.COL_WIDTH
-
-        self.set_width_col_name()
         self.ws.sheet_properties.outlinePr.summaryRight = False
 
     def _stylization_header(self) -> None:
@@ -106,6 +101,20 @@ class Excel:
                 cell.fill = hdr_fill
                 cell.border = thin_border
                 cell.font = hdr_font
+
+    def set_width_column(self) -> None:
+        for col in range(1, self.ws.max_column + 1):
+            if col <= self.col_img_start_idx or col > self.col_img_end_idx:
+                # self.dimensions[get_column_letter(col)].width = config.COL_WIDTH
+                # self.dimensions[get_column_letter(col)].bestFit = True
+                # self.dimensions[get_column_letter(col)].auto_size = True
+                self.dimensions[get_column_letter(col)].width = config.COL_WIDTH
+
+        # dim_holder = DimensionHolder(worksheet=self.ws)
+        # for col in range(1, self.ws.max_column + 1):
+            # dim_holder[get_column_letter(col)] = ColumnDimension(self.ws, min=col, max=col, width=20)
+        # self.ws.column_dimensions = dim_holder
+        self.set_width_col_name()
 
     def _get_styles_header(self) -> tuple[Alignment, PatternFill, Border, Font]:
         hdr_al = Alignment(
@@ -304,6 +313,7 @@ def main() -> None:
     excel.move_columns()
     excel.copy_data_columns()
     excel.stylization()
+    excel.set_width_column()
     excel.hidden_columns()
     excel.freeze_region()
     excel.save()
