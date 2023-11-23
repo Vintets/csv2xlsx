@@ -109,7 +109,12 @@ class Excel:
 
     def set_width_column(self) -> None:
         for col in range(1, self.ws.max_column + 1):
-            if col <= self.col_img_start_idx or col > self.col_img_end_idx:
+            if (
+                self.col_img_start_idx is None or
+                self.col_img_end_idx is None or
+                col <= self.col_img_start_idx or
+                col > self.col_img_end_idx
+            ):
                 # self.dimensions[get_column_letter(col)].width = config.COL_WIDTH
                 # self.dimensions[get_column_letter(col)].bestFit = True
                 # self.dimensions[get_column_letter(col)].auto_size = True
@@ -225,6 +230,8 @@ class Excel:
         max_images_count = max(map(len, images))
         # pprint.pprint(images)
         # print(max_images_count)
+        if max_images_count <= 1:
+            return
         self.insert_image_columns(col_images_idx + 1, max_images_count - 1, name=self.col_img_name)
         self.write_images_link(col_images_idx, images)
         self.col_img_start_idx = col_images_idx
