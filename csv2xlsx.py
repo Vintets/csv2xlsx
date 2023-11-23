@@ -341,7 +341,7 @@ def unzip_file(file_zip: Path) -> Path:
         with ZipFile(file_zip, 'r') as myzip:
             # myzip.printdir()
             namelist = myzip.namelist()[0]
-            unzipped_name = myzip.extract(namelist)
+            unzipped_name = myzip.extract(namelist, path=file_zip.parent)
     except BadZipFile:
         raise FileNotZIPError()
 
