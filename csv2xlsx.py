@@ -83,7 +83,7 @@ class Excel:
     def create(self) -> None:
         self.wb = opx.Workbook()
         self.ws = self.wb.worksheets[0]  # wb.active
-        self.ws.title = self.file_out.stem
+        self.ws.title = self.file_out.stem[:30]
         self.dimensions = self.ws.column_dimensions
 
     def display_dimensions(self) -> None:
