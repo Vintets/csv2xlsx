@@ -148,7 +148,8 @@ class Excel:
                              )
         hdr_font = Font(
                        bold=True,
-                       color='1F497D'
+                       color='1F497D',
+                       size=10
                        )
         return (hdr_al, hdr_fill, thin_border, hdr_font)
 
