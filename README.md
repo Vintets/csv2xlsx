@@ -56,19 +56,19 @@ COL_WIDTH = 15
 CLOSECONSOLE = True
 EXCEPTION_TRACE = False
 ```
-``REMOVE_FILE_IN`` : удалять исходный файл после завершения 
-``REMOVE_COLUMN`` : удалять столбцы 
-``REMOVE_COLUMNS`` : список удаляемых столбцов 
-``ADDITIONAL_ACTIONS`` : вкл/выкл (выполнять перемещение, сворачивание, копирование данных) 
-``MOVE_COLUMNS`` : перености столбец: после столбца 
-``COPY_DATA_COLUMNS`` : заполнить данные (если пусто) в столбце: из столбца 
-``HIDDEN_COLUMNS`` : свернуть столбцы 
-``FREEZE_REGION`` : заморозить регион после указанного столбца 
-``HEADER_HEIGHT`` : высота шапки 
-``COL_NAME_WIDTH`` : ширина колонки  с наименованием 
-``COL_WIDTH`` : ширина остальных колонок 
-``CLOSECONSOLE`` : закрывать консоль 
-``EXCEPTION_TRACE`` : показывать ошибки 
+``REMOVE_FILE_IN`` : удалять исходный файл после завершения  
+``REMOVE_COLUMN`` : удалять столбцы  
+``REMOVE_COLUMNS`` : список удаляемых столбцов  
+``ADDITIONAL_ACTIONS`` : вкл/выкл (выполнять перемещение, сворачивание, копирование данных)  
+``MOVE_COLUMNS`` : перености столбец: после столбца  
+``COPY_DATA_COLUMNS`` : заполнить данные (если пусто) в столбце: из столбца  
+``HIDDEN_COLUMNS`` : свернуть столбцы  
+``FREEZE_REGION`` : заморозить регион после указанного столбца  
+``HEADER_HEIGHT`` : высота шапки  
+``COL_NAME_WIDTH`` : ширина колонки  с наименованием  
+``COL_WIDTH`` : ширина остальных колонок  
+``CLOSECONSOLE`` : закрывать консоль  
+``EXCEPTION_TRACE`` : показывать ошибки  
 
 
 ## Usage
@@ -97,7 +97,7 @@ ____
  * Written by Vintets <programmer@vintets.ru>, November 2023
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 *******************************************************/
 
 ____
