@@ -19,55 +19,55 @@ from openpyxl.utils import get_column_letter
 
 class ArgumentNotPassedError(Exception):
     """Error argument not passed (file csv)."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = f'Не передан файл для обработки!'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
 class ArgumentIsFolderError(Exception):
     """Error argument is folder."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = f'Передана директория, а не файл!'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
 class FileNotExistError(Exception):
     """Error argument file not exist."""
-    def __init__(self, file_in: str):
+    def __init__(self, file_in: str) -> None:
         self.msg = f"Файл '{file_in}' не существует!"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
 class FileNotCSVError(Exception):
     """Error file not CSV."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = f'Передан не CSV файл!'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
 class FileNotZIPError(Exception):
     """Error file not ZIP."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = f'Неверный формат ZIP файла!'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
 class SaveError(Exception):
     """Error save file."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.msg = f'Ошибка сохранения файла!'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.msg
 
 
