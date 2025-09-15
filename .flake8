@@ -1,8 +1,13 @@
 [flake8]
 max-line-length = 100
 max-complexity = 7
-inline-quotes = '
 import-order-style = google
+min-coverage-percents = 100
+
+# max_function_length = 25
+max_parameters_amount = 7
+# max_returns_amount = 5
+
 ignore =
     # E123 closing bracket does not match indentation of opening bracket's
     E123,
@@ -19,8 +24,11 @@ ignore =
     # F541 f-string is missing placeholders
     F541,
     # type annotations
-    TAE001
+    # TAE001
     # print found
     T201
-exclude = .git,.vscode,__pycache__,env,venv,logs,zProjectDevelopment,old,build,dist,*.db,*.bat,*.exe,*.png,*.jpg,*.webm,*.mp4,*.mkv,*.wav,*.mp3,*.m4a,*.xml,*.csv,*.xlsx,*.txt,*.zip
-# noqa
+exclude = .git,.vscode,__pycache__,env,venv,logs,zProjectDevelopment,old,build,dist,*.db,*.bat,*.exe,*.png,*.jpg,*.webm,*.mp4,*.mkv,*.wav,*.mp3,*.m4a,*.xml,*.csv,*.xls,*.xlsx,*.txt,*.zip
+
+inline-quotes = '
+
+# noqa:
